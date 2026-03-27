@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IV Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .patient {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .green { background: #28a745; }
+    .yellow { background: #ffc107; color: black; }
+    .red { background: #dc3545; }
+
+    /* BLINK EFFECT */
+    .blink {
+      animation: blinkAnim 1s infinite;
+    }
+
+    @keyframes blinkAnim {
+      0% { opacity: 1; }
+      50% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>💧 IV Monitoring</h2>
+
+  <!-- Patient Info -->
+  <div class="patient">
+    <strong>Name:</strong> John Doe<br>
+    <strong>Age:</strong> 45<br>
+    <strong>Blood Group:</strong> B+<br>
+    <strong>Room No:</strong> 102
+  </div>
+
+  <!-- Weight Display -->
+  <div id="card" class="card green">
+    <span id="weight">Loading...</span>
+  </div>
+
+  <div id="status" class="status">Checking...</div>
+
+</div>
+
+<script>
+let alertTriggered = false;
+let blinkInterval = null;
+
+setInterval(async () => {
+  const res = await fetch("/data");
+  const data = await res.json();
+
+  const weight = data.weight;
+
+  document.getElementById("weight").innerText = weight + " g";
+
+  const card = document.getElementById("card");
+  const status = document.getElementById("status");
+
+  // Reset styles
+  card.classList.remove("green", "yellow", "red");
+
+  if (weight > 150) {
+    card.classList.add("green");
+    status.innerText = "✅ Normal Level";
+
+    alertTriggered = false;
+
+    // Stop blinking
+    card.classList.remove("blink");
+
+  } 
+  else if (weight > 50) {
+    card.classList.add("yellow");
+    status.innerText = "⚠ Medium Level";
+
+    alertTriggered = false;
+
+    // Stop blinking
+    card.classList.remove("blink");
+
+  } 
+  else {
+    card.classList.add("red");
+    status.innerText = "🚨 Critical Level";
+
+    // Trigger alert ONLY ONCE
+    if (!alertTriggered) {
+      alert("⚠ IV Bottle Almost Empty!");
+      alertTriggered = true;
+    }
+
+    // Add blinking effect (smooth, non-blocking)
+    card.classList.add("blink");
+  }
+
+}, 2000);
+</script>
+
+</body>
+</html>
