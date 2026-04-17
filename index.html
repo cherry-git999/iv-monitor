@@ -1,156 +1,525 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>IV Monitor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IV Monitor</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .container {
-      width: 90%;
-      max-width: 400px;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      text-align: center;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #2c2f3f 0%, #1c1f2b 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+}
 
-    h2 {
-      margin-bottom: 10px;
-    }
+/* MAIN CONTAINER */
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: #f8f9fa;
+  border-radius: 0;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
 
-    .patient {
-      text-align: left;
-      margin-bottom: 20px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+/* DESKTOP */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 900px;
+    border-radius: 0;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
 
-    .card {
-      padding: 20px;
-      border-radius: 12px;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+  h2 {
+    grid-column: 1 / -1;
+  }
 
-    .green { background: #28a745; }
-    .yellow { background: #ffc107; color: black; }
-    .red { background: #dc3545; }
+  .info {
+    grid-column: 1 / -1;
+  }
 
-    /* BLINK EFFECT */
-    .blink {
-      animation: blinkAnim 1s infinite;
-    }
+  #mainWeight {
+    grid-column: 1 / -1;
+  }
 
-    @keyframes blinkAnim {
-      0% { opacity: 1; }
-      50% { opacity: 0.4; }
-      100% { opacity: 1; }
-    }
+  .card:nth-child(4) {
+    grid-column: 1;
+  }
 
-    .status {
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: bold;
-    }
+  .card:nth-child(5) {
+    grid-column: 2;
+  }
 
-    @media (max-width: 500px) {
-      .card {
-        font-size: 22px;
-      }
-    }
-  </style>
+  .card:nth-child(6) {
+    grid-column: 1 / -1;
+  }
+
+  .button {
+    grid-column: 1 / -1;
+  }
+
+  .footer {
+    grid-column: 1 / -1;
+  }
+}
+
+/* TABLET */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    max-width: 700px;
+    border-radius: 0;
+    padding: 28px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  .main-weight {
+    font-size: 56px;
+    padding: 28px;
+  }
+
+  .info {
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+
+  .row {
+    padding: 16px 18px;
+    font-size: 16px;
+  }
+
+  .button {
+    padding: 16px;
+    font-size: 17px;
+  }
+}
+
+/* HEADER */
+h2 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 28px;
+  color: #1c1f2b;
+  font-weight: 600;
+}
+
+/* DESKTOP HEADER */
+@media (min-width: 1024px) {
+  h2 {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+}
+
+/* PATIENT INFO */
+.info {
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.8;
+  color: #555;
+  background: #f0f2f5;
+  padding: 12px 16px;
+  border-radius: 0;
+  border-left: 4px solid #5aa9e6;
+}
+
+/* DESKTOP INFO */
+@media (min-width: 1024px) {
+  .info {
+    font-size: 15px;
+    padding: 14px 18px;
+    border-radius: 0;
+    margin-bottom: 24px;
+  }
+}
+
+/* BIG WEIGHT DISPLAY (IMPORTANT) */
+.main-weight {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+  padding: 24px;
+  border-radius: 0;
+  margin-bottom: 20px;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* DESKTOP MAIN WEIGHT */
+@media (min-width: 1024px) {
+  .main-weight {
+    font-size: 64px;
+    padding: 32px;
+    border-radius: 0;
+    margin-bottom: 24px;
+  }
+}
+
+.green { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+.yellow { background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); color: #1c1f2b; }
+.red { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); }
+
+/* BLINK */
+.blink {
+  animation: blinkAnim 1s infinite;
+  box-shadow: 0 0 20px rgba(220, 53, 69, 0.6);
+}
+@keyframes blinkAnim {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 0;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8eaed;
+}
+
+/* DESKTOP CARDS */
+@media (min-width: 1024px) {
+  .card {
+    border-radius: 0;
+    margin-bottom: 16px;
+  }
+}
+
+/* STATUS HEADER */
+.status-header {
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* DESKTOP STATUS HEADER */
+@media (min-width: 1024px) {
+  .status-header {
+    padding: 16px;
+    font-size: 15px;
+    border-radius: 0;
+  }
+}
+
+/* ROW */
+.row {
+  padding: 14px 16px;
+  border-top: 1px solid #f0f0f0;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row:first-child {
+  border-top: none;
+}
+
+/* DESKTOP ROW */
+@media (min-width: 1024px) {
+  .row {
+    padding: 18px 20px;
+    font-size: 16px;
+  }
+}
+
+/* PROGRESS BAR */
+.progress {
+  height: 10px;
+  background: #e8eaed;
+  border-radius: 0;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* DESKTOP PROGRESS BAR */
+@media (min-width: 1024px) {
+  .progress {
+    height: 12px;
+    border-radius: 0;
+  }
+}
+
+/* BUTTON */
+.button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 0;
+  border: none;
+  background: linear-gradient(135deg, #5aa9e6 0%, #7fc8f8 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(90, 169, 230, 0.3);
+  margin-top: 4px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90, 169, 230, 0.4);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+/* DESKTOP BUTTON */
+@media (min-width: 1024px) {
+  .button {
+    padding: 16px 28px;
+    border-radius: 0;
+    font-size: 17px;
+    margin-top: 8px;
+  }
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 16px;
+  color: #888;
+  font-weight: 500;
+}
+
+/* DESKTOP FOOTER */
+@media (min-width: 1024px) {
+  .footer {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .container {
+    padding: 18px;
+    border-radius: 0;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .main-weight {
+    font-size: 40px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  .info {
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+  }
+
+  .row {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .button {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
+}</style>
 </head>
 
 <body>
+  <div class="container">
+    
+    <h2>💧 IV Monitoring</h2>
 
-<div class="container">
+    <div class="info">
+      Name: John Doe<br>
+      Age: 45<br>
+      Blood Group: B+<br>
+      Room No: 102
+    </div>
 
-  <h2>💧 IV Monitoring</h2>
+    <!-- MAIN READING (TOP PRIORITY) -->
+    <div id="mainWeight" class="main-weight green">
+      Loading...
+    </div> 
 
-  <!-- Patient Info -->
-  <div class="patient">
-    <strong>Name:</strong> John Doe<br>
-    <strong>Age:</strong> 45<br>
-    <strong>Blood Group:</strong> B+<br>
-    <strong>Room No:</strong> 102
+    <!-- STATUS CARD -->
+    <div class="card">
+      <div id="statusHeader" class="status-header green">
+        ✓ STATUS: NORMAL
+      </div>
+      <div class="row">
+        <span>💧 Fluid Remaining:</span>
+        <span id="weight" style="font-weight: 600; color: #28a745;">-- g</span>
+      </div>
+      <div class="row" style="display: block;">
+        <div class="progress">
+          <div id="bar" class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div style="font-size: 13px; color: #666;">⏱ Time to Empty</div>
+          <div style="font-weight: 600; margin-top: 2px;" id="timeToEmpty">-- minutes</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 13px; color: #28a745; font-weight: 600;" id="flowRate">-- mL/min</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <span>✓ Flow Rate:</span>
+        <span id="flowStatus" style="font-weight: 600; color: #28a745;">Normal</span>
+      </div>
+    </div>
+
+    <!-- ALERT CARD -->
+    <div class="card">
+      <div class="row">
+        <span>⚠ Alerts:</span>
+        <span id="alert" style="font-weight: 600; color: #28a745;">None</span>
+      </div>
+    </div>
+
+    <!-- SUGGESTION CARD -->
+    <div class="card">
+      <div class="row">
+        <span>💡 Suggestion:</span>
+      </div>
+      <div class="row" style="padding-top: 0; padding-bottom: 16px;">
+        <span id="suggestion" style="font-weight: 500; color: #555;">Prepare next IV bag</span>
+      </div>
+    </div>
+
+    <!-- DEVICE CARD -->
+    <div class="card">
+      <div class="row">
+        <span>✅ Device:</span>
+        <span style="font-weight: 500;">Connected</span>
+      </div>
+      <div class="row">
+        <span>🔋 Battery:</span>
+        <span style="font-weight: 600; color: #28a745;">82%</span>
+      </div>
+    </div>
+
+    <button class="button">ACKNOWLEDGE</button>
+
+    <div class="footer">
+      Monitoring in real-time • Last updated: <span id="timeUpdate">--</span>
+    </div>
+
   </div>
-
-  <!-- Weight Display -->
-  <div id="card" class="card green">
-    <span id="weight">Loading...</span>
-  </div>
-
-  <div id="status" class="status">Checking...</div>
-
-</div>
 
 <script>
 let alertTriggered = false;
-let blinkInterval = null;
+const FLOW_RATE = 15; // mL/min (typical IV flow rate)
 
 setInterval(async () => {
+
   const res = await fetch("/data");
   const data = await res.json();
-
   const weight = data.weight;
 
-  document.getElementById("weight").innerText = weight + " g";
+  // Convert grams to mL (assuming 1g ≈ 1mL for IV fluid)
+  const fluidRemaining = weight;
+  
+  // Calculate time to empty in minutes
+  const timeToEmpty = Math.ceil(fluidRemaining / FLOW_RATE);
+  
+  // Display values
+  document.getElementById("weight").innerText = fluidRemaining + " mL (" + Math.round((fluidRemaining / 500) * 100) + "%)";
+  document.getElementById("mainWeight").innerText = fluidRemaining + " mL";
+  document.getElementById("flowRate").innerText = FLOW_RATE + " mL/min";
+  document.getElementById("timeToEmpty").innerText = timeToEmpty + " minutes remaining";
+  document.getElementById("timeUpdate").innerText = "Now";
 
-  const card = document.getElementById("card");
-  const status = document.getElementById("status");
+  const main = document.getElementById("mainWeight");
+  const header = document.getElementById("statusHeader");
 
-  // Reset styles
-  card.classList.remove("green", "yellow", "red");
+  main.classList.remove("green","yellow","red","blink");
 
-  if (weight > 150) {
-    card.classList.add("green");
-    status.innerText = "✅ Normal Level";
+  let status = "NORMAL";
+  let color = "green";
+  let flowStatus = "Normal";
 
-    alertTriggered = false;
+  if (fluidRemaining < 50) {
+    status = "CRITICAL";
+    color = "red";
+    flowStatus = "Critical";
+    document.getElementById("alert").innerText = "LOW IV!";
+    document.getElementById("suggestion").innerText = "Replace IV bag immediately!";
 
-    // Stop blinking
-    card.classList.remove("blink");
-
-  } 
-  else if (weight > 50) {
-    card.classList.add("yellow");
-    status.innerText = "⚠ Medium Level";
-
-    alertTriggered = false;
-
-    // Stop blinking
-    card.classList.remove("blink");
-
-  } 
-  else {
-    card.classList.add("red");
-    status.innerText = "🚨 Critical Level";
-
-    // Trigger alert ONLY ONCE
     if (!alertTriggered) {
       alert("⚠ IV Bottle Almost Empty!");
       alertTriggered = true;
     }
 
-    // Add blinking effect (smooth, non-blocking)
-    card.classList.add("blink");
+    main.classList.add("blink");
+
+  } else if (fluidRemaining < 150) {
+    status = "MEDIUM";
+    color = "yellow";
+    flowStatus = "Warning";
+    document.getElementById("alert").innerText = "Warning - Low fluid";
+    document.getElementById("suggestion").innerText = "Prepare next IV bag in " + timeToEmpty + " minutes";
+    alertTriggered = false;
+
+  } else {
+    document.getElementById("alert").innerText = "None";
+    document.getElementById("suggestion").innerText = "Prepare next IV bag in " + timeToEmpty + " minutes";
+    alertTriggered = false;
   }
+
+  main.classList.add(color);
+  header.className = "status-header " + color;
+  header.innerText = "✓ STATUS: " + status;
+  document.getElementById("flowStatus").innerText = flowStatus;
+
+  // Progress bar (based on 500mL max)
+  let percent = Math.min((fluidRemaining / 500) * 100, 100);
+  document.getElementById("bar").style.width = percent + "%";
 
 }, 2000);
 </script>
 
 </body>
-</html>
+</html> 

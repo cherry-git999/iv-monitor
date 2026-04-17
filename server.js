@@ -27,7 +27,12 @@ app.get("/data", (req, res) => {
 
 // 🌐 Serve dashboard
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "index.html"), (err) => {
+        if (err) {
+            console.error("Error sending index.html:", err);
+            res.status(500).send("Error loading dashboard");
+        }
+    });
 });
 
 // 🔴 IMPORTANT: Railway PORT support
